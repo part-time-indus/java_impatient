@@ -1,5 +1,7 @@
 package ch01.sec01;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
 public class HelloWorld {
@@ -11,8 +13,18 @@ public class HelloWorld {
 //        double_cast_int();
 //        math_ops();
 //        remove_space("This is a demo sentence");
-        rand_string();
+//        rand_string();
+//        non_ascii_chars("This text contains a non ascii ɮ. There is another non ascii character here ͱ. \u03FA is also non ascii");
+//        System.out.println(Arrays.toString(direction(Direction.S)));
+//        System.out.println(lottery_nums());
+//        int[][] matrix = new int[][]{{16,3,2,13}, {5,10,11,8}, {9,6,7,12}, {4,15,14,1}};
+//        System.out.println(magic_square(matrix));
+        pascal_triangle(34);
     }
+
+
+
+
 
 
 
@@ -140,6 +152,141 @@ public class HelloWorld {
         System.out.println(result_string.toString());
 
     }
+
+    //Exercise 11
+    public static void non_ascii_chars(String text){
+        int total_code_points = text.codePointCount(0, text.length());
+        for(int i = 0; i < total_code_points; i++){
+            int curr_code_point = text.codePointAt(i);
+            if(curr_code_point > 127){
+                System.out.println(Character.toChars(curr_code_point));
+            }
+        }
+    }
+
+    public enum Direction{
+        N, S, W, E,
+    };
+
+    //Exercise 12
+    public static int[] direction(Direction dir)  {
+        return switch(dir){
+            case Direction.W -> new int[]{-1,0};
+            case Direction.E -> new int[]{1,0};
+            case Direction.N -> new int[]{0, 1};
+            case Direction.S -> new int[]{0, -1};
+        };
+    }
+
+    //Exercise 13
+
+    public static int[] change_direction(Direction move_dir, int[] curr_dir){
+        int[] dir_before_move = Arrays.copyOf(curr_dir, curr_dir.length);
+        switch(move_dir){
+            case Direction.E -> dir_before_move[0]+=1;
+            case Direction.W -> dir_before_move[0]-=1;
+            case Direction.S -> dir_before_move[1]-=1;
+            case Direction.N -> dir_before_move[1]+=1;
+
+        }
+        return dir_before_move;
+    }
+
+    //Exercise 18
+    public static String lottery_nums(){
+        int picks = 6;
+        ArrayList<Integer> number_pool = new ArrayList<Integer>();
+        ArrayList<Integer> number_picked = new ArrayList<Integer>();
+
+        Random rand_gen = new Random();
+        for(int i = 1; i <= 49; i++){
+            number_pool.add(i);
+        }
+        for(int i = 0; i < 6; i++){
+            int rand_index = rand_gen.nextInt(1,50-i);
+            number_picked.add(number_pool.remove(rand_index));
+        }
+        return number_picked.toString();
+    }
+
+    //Exercise 19
+
+    public static boolean magic_square(int[][] matrix){
+
+        int prev_sum = 0;
+        int row_len = matrix.length;
+        int col_len = matrix[0].length;
+        if(row_len != col_len) return false;
+        if(col_len < 3) return false;
+        //Check the rows
+        for(int i = 0; i < row_len; i++) {
+            int curr_row_sum = 0;
+            for (int j = 0; j < col_len; j++) {
+                curr_row_sum += matrix[i][j];
+            }
+            if(i == 0){
+                prev_sum = curr_row_sum;
+                continue;
+            }
+            return (prev_sum == curr_row_sum);
+        }
+        //2. check the columns
+        for(int i = 0; i < col_len; i++){
+
+            int curr_col_sum = 0;
+            for(int j=0; j < row_len; j++){
+                curr_col_sum += matrix[j][i];
+            }
+            if(i == 0){
+                prev_sum = curr_col_sum;
+                continue;
+            }
+            return(prev_sum == curr_col_sum);
+        }
+
+        //3. check the diagonals
+        int left_diagonal_sum = 0;
+        int right_diagonal_sum = 0;
+        for (int i = 0; i < row_len; i++){
+            int last_i = (row_len - 1);
+            left_diagonal_sum += matrix[i][i];
+            right_diagonal_sum += matrix[last_i-i][last_i-i];
+        }
+        return left_diagonal_sum == right_diagonal_sum;
+
+    }
+
+    //Exercise 20
+    public static ArrayList<ArrayList<Integer>> pascal_triangle(int n){
+        ArrayList<ArrayList<Integer>> triangle = new ArrayList<>();
+        for(int i = 0; i <n; i++){
+            ArrayList<Integer> row = new ArrayList<Integer>();
+            row.add(1);
+            if(i > 0) {
+                row.add(1);
+            }
+            triangle.add(row);
+            for(int j = 1; j < i; j++){
+                int el_add = triangle.get(i-1).get(j-1) + triangle.get(i-1).get(j);
+                triangle.get(i).add(j, el_add);
+            }
+        }
+        for(ArrayList<Integer> row: triangle){
+            System.out.println(row.toString());
+        }
+        return triangle;
+    }
+    //Exercise 31
+    public static int average(int first_num, int... rest){
+        int sum = first_num;
+        int count = rest.length + 1;
+        for(int num: rest){
+            sum = sum + num;
+        }
+        return sum/count;
+    }
+
+
 
 }
 
