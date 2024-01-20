@@ -171,10 +171,10 @@ public class HelloWorld {
     //Exercise 12
     public static int[] direction(Direction dir)  {
         return switch(dir){
-            case Direction.W -> new int[]{-1,0};
-            case Direction.E -> new int[]{1,0};
-            case Direction.N -> new int[]{0, 1};
-            case Direction.S -> new int[]{0, -1};
+            case W -> new int[]{-1,0};
+            case E -> new int[]{1,0};
+            case N -> new int[]{0, 1};
+            case S -> new int[]{0, -1};
         };
     }
 
@@ -183,10 +183,10 @@ public class HelloWorld {
     public static int[] change_direction(Direction move_dir, int[] curr_dir){
         int[] dir_before_move = Arrays.copyOf(curr_dir, curr_dir.length);
         switch(move_dir){
-            case Direction.E -> dir_before_move[0]+=1;
-            case Direction.W -> dir_before_move[0]-=1;
-            case Direction.S -> dir_before_move[1]-=1;
-            case Direction.N -> dir_before_move[1]+=1;
+            case E -> dir_before_move[0]+=1;
+            case W -> dir_before_move[0]-=1;
+            case S -> dir_before_move[1]-=1;
+            case N -> dir_before_move[1]+=1;
 
         }
         return dir_before_move;
