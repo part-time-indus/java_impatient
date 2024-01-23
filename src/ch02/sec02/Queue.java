@@ -17,6 +17,35 @@ public class Queue {
         Node next;
     }
 
+    public class Iterator{
+        Queue.Node currNode;
+        public Iterator(){
+            currNode = null;
+        }
+        public Node next(){
+            if(hasNext()) {
+                return currNode;
+            }
+            return null;
+        }
+
+        private boolean hasNext(){
+            if(currNode == null ){
+                currNode = Queue.this.head;
+                return currNode != null;
+            }
+            if(currNode.next != null){
+                currNode = currNode.next;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public Iterator iterator(){
+        return new Iterator();
+    }
+
     public void add(Node newNode){
         if(this.head == null && this.tail == null){
             this.head = this.tail = newNode;
