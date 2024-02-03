@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/../commons-csv-1.10.0" />
@@ -20,6 +20,15 @@
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/../commons-csv-1.10.0" recursive="false" />
         <jarDirectory url="file://$MODULE_DIR$/../commons-csv-1.10.0" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../commons-csv-1.10.0-bin/commons-csv-1.10.0/commons-csv-1.10.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
