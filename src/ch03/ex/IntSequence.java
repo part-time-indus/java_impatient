@@ -1,13 +1,29 @@
 package ch03.ex;
 
-public class IntSequence {
-    private int[] seq;
-    public IntSequence(int[] seq){
-        this.seq = seq;
+public interface IntSequence {
+    default boolean hasNext(){
+        return true;
     }
 
-    public static IntSequence of(int... args){
-        return new IntSequence(args);
+    int next();
+
+    static IntSequence of(int... args){
+        return new IntSequence(){
+            private int index = 0;
+
+            @Override
+            public boolean hasNext(){
+                return this.index < args.length;
+            }
+
+            @Override
+            public int next(){
+                int result = args[index];
+                this.index++;
+                return result;
+            }
+        }
+
     }
 
 }
