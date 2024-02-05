@@ -22,7 +22,7 @@ public interface IntSequence {
                 this.index++;
                 return result;
             }
-        }
+        };
 
     }
 
