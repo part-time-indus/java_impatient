@@ -26,4 +26,9 @@ public interface IntSequence {
 
     }
 
+    static IntSequence constant(int n){
+        return () -> n;
+    }
+
+
 }
