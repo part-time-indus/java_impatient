@@ -6,7 +6,7 @@ import java.io.FileFilter;
 public class ListDirs {
 
     public static void main(String[] varargs){
-        File[] dirs = ListDirs.FetchSubDirsLambdaExp("D:\\documents");
+        File[] dirs = ListDirs.FetchFilesWithEx("D:\\documents", "pdf");
         for(File f:  dirs){
             System.out.println(f.getName());
         }
@@ -41,5 +41,19 @@ public class ListDirs {
 
         return null;
 
+    }
+
+    public static File[] FetchFilesWithEx(String dirPath, String fileExt){
+        File[] files = null;
+        File ParentDir = new File(dirPath);
+        if(ParentDir.exists() && ParentDir.isDirectory()){
+            files = ParentDir.listFiles((f) -> {
+                String name = f.getName();
+                int extInd = name.lastIndexOf(".") + 1;
+                String ext = name.substring(extInd);
+                return f.isFile() && ext.compareToIgnoreCase(fileExt) == 0;
+            });
+        }
+        return files;
     }
 }
