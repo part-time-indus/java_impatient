@@ -2,13 +2,18 @@ package ch03.ex;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
 
 public class ListDirs {
 
     public static void main(String[] varargs){
-        File[] dirs = ListDirs.FetchFilesWithEx("D:\\documents", "pdf");
-        for(File f:  dirs){
-            System.out.println(f.getName());
+        File[] dirs = ListDirs.FetchSubDirsMethodExp("C:\\flutter\\flutter");
+//        for(File f:  dirs){
+//            System.out.println(f.getName());
+//        }
+        ListDirs.SortFiles(dirs);
+        for(File f: dirs){
+            System.out.println(f.getAbsolutePath());
         }
     }
     public static File[] FetchSubDirsMethodExp(String dirPath){
@@ -16,7 +21,7 @@ public class ListDirs {
         File parentDir = new File(dirPath);
         FileFilter filter = File::isDirectory;
         if(parentDir.exists() && parentDir.isDirectory()){
-            subdirs = parentDir.listFiles(filter);
+            subdirs = parentDir.listFiles();
         }
         return subdirs;
     }
@@ -55,5 +60,19 @@ public class ListDirs {
             });
         }
         return files;
+    }
+    public static void SortFiles(File[] files){
+        Arrays.sort(files, (fa, fb) -> {
+            if(fa.isDirectory() && fb.isFile()){
+                return -1;
+            }
+            if(fa.isFile() && fb.isDirectory()){
+                return 1;
+            }
+            if((fa.isDirectory() && fb.isDirectory()) || (fa.isFile() && fb.isFile())){
+                return fa.getAbsolutePath().length() - fb.getAbsolutePath().length();
+            }
+            return 0;
+        });
     }
 }
