@@ -1,6 +1,24 @@
 package ch03.ex;
 
+import java.util.Random;
+import java.util.random.RandomGenerator;
+
 public interface IntSequence {
+    class RandomSequence implements IntSequence{
+        RandomGenerator generator = new Random();
+        int low;
+        int high;
+        public RandomSequence(int low, int high){
+            this.low  = low;
+            this.high = high;
+        }
+        @Override
+        public int next(){
+            return this.low + generator.nextInt(this.high - this.low + 1);
+        }
+
+
+    }
     default boolean hasNext(){
         return true;
     }
