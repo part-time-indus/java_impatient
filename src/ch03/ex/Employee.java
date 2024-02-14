@@ -1,5 +1,7 @@
 package ch03.ex;
 
+import java.util.Arrays;
+
 public class Employee  implements  Measurable{
     double salary;
     String name;
@@ -41,6 +43,17 @@ public class Employee  implements  Measurable{
             return result.name;
         }
         return "";
+    }
+
+    public static void Sort(Employee[] emps){
+        Arrays.sort(emps, (empA, empB) -> {
+            int salA = (int) empA.salary;
+            int salB = (int) empB.salary;
+
+            if(salA == salB)
+                return empA.name.compareTo(empB.name);
+            return salA - salB;
+        });
     }
 
 }
