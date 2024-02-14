@@ -31,10 +31,21 @@ public class Greeter implements Runnable {
 
     }
 
+    public static Runnable RunSync(Runnable[] inst){
+        return () -> {
+            for(Runnable run: inst){
+                run.run();
+            }
+        };
+
+    }
+
     public static void main(String[] varargs){
         Runnable task1 = new Greeter("Kutta", 10);
         Runnable task2 = new Greeter("Kanjar", 25);
         runInOrder(task1, task2);
 
     }
+
+
 }
