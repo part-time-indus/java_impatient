@@ -2,7 +2,7 @@ package ch04.ex;
 
 import java.util.Objects;
 
-public class Point {
+public class Point implements Cloneable {
     protected double x;
     protected double y;
     public Point(double x, double y){
@@ -34,6 +34,11 @@ public class Point {
     @Override
     public int hashCode(){
         return Objects.hash(this.x, this.y);
+    }
+
+    @Override
+    public Point clone() throws CloneNotSupportedException{
+        return (Point) super.clone();
     }
 
 }
