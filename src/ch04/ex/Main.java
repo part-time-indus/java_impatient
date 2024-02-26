@@ -1,6 +1,7 @@
 package ch04.ex;
 
 public class Main {
+
     public static void main(String[] varargs){
         Item item = new Item("Notebook A4", 5.0);
         DiscountedItem discItem = new DiscountedItem("Notebook A4", 5.0, 2.0);
