@@ -17,15 +17,19 @@ public class UniversalToString {
         var fields = cl.getDeclaredFields();
         var lastField = fields[fields.length - 1];
 
-        for(Field f: fields){
-            if(f.get(obj) != obj){
-                f.setAccessible(true);
-                str.append(f.getName()).append(" = ").append(f.get(obj));
-                if(f != lastField){
-                    str.append(", ");
-                }
+        while(cl != null){
+            for(Field f: fields){
+                if(f.get(obj) != obj){
+                    f.setAccessible(true);
+                    str.append(f.getName()).append(" = ").append(f.get(obj));
+                    if(f != lastField){
+                        str.append(", ");
+                    }
 
+                }
             }
+            cl = cl.getSuperclass();
+
         }
         str.append("]");
         return str.toString();
