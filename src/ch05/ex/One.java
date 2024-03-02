@@ -11,8 +11,10 @@ public class One {
         try{
             var result = readValue("src/ch05/ex/num.txt");
             System.out.println(sumValue(result));
-        }catch(Exception e){
-            System.out.println("Error "+ e.toString());
+        }catch(NumberFormatException e){
+            System.out.println("Please recheck the file. All data must be in decimal point number format");
+        }catch(IOException e){
+            System.out.println("File could not be read for unknown reasons");
         }
     }
 
@@ -46,7 +48,7 @@ public class One {
             }
 
         }catch(FileNotFoundException ex){
-            System.out.println(ex.toString());
+            System.out.println("File could not be found. Please ensure the filename or file path is correct.");;
         }
          return result;
     }
