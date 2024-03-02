@@ -10,12 +10,18 @@ public class One {
     public static void main(String[] varargs){
         try{
             var result = readValue("src/ch05/ex/num.txt");
-            for(var r: result){
-                System.out.println(r);
-            }
+            System.out.println(sumValue(result));
         }catch(Exception e){
-            System.out.println(e.toString());
+            System.out.println("Error "+ e.toString());
         }
+    }
+
+    public static double sumValue(ArrayList<Double> values){
+        double result = 0.0;
+        for(Double value: values){
+            result = result + value;
+        }
+        return result;
     }
     public static ArrayList<Double> readValue(String filename)throws IOException, NullPointerException, NumberFormatException {
         File f = new File(filename);
@@ -34,13 +40,14 @@ public class One {
                     }
                     word.append(buf[i]);
                 }
+                result.add(Double.parseDouble(word.toString()));
+                word.delete(0, charsRead);
                 charsRead = reader.read(buf);
             }
-            result.add(Double.parseDouble(word.toString()));
-            word.delete(0, charsRead);
+
         }catch(FileNotFoundException ex){
             System.out.println(ex.toString());
         }
-        return result;
+         return result;
     }
 }
