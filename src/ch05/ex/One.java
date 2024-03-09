@@ -1,5 +1,7 @@
 package ch05.ex;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
@@ -116,4 +118,43 @@ public class One {
         }
     }
 
+    public static void ReadFileWithException(String src){
+        BufferedReader in = null;
+        try{
+            in = Files.newBufferedReader(Path.of(src), StandardCharsets.UTF_8);
+        }catch(IOException ex){
+            System.err.println("Caught IO Exception" + ex.getMessage());
+        }finally{
+            if(in != null){
+                try{
+                    in.close();
+                }catch(IOException ex){
+                    System.err.println(ex.getMessage());
+                }
+            }
+        }
+    }
+    public static void ReadFileWithException2(String src){
+        BufferedReader in = null;
+        try{
+            try{
+                in = Files.newBufferedReader(Path.of(src), StandardCharsets.UTF_8);
+            }finally {
+                if(in != null){
+                    in.close();
+                }
+
+            }
+        }catch(IOException ex){
+            System.err.println("Caught IO Exception" + ex.getMessage());
+        }
+    }
+    public static void ReadFileWithException3(String src){
+        try(var in = Files.newBufferedReader(Path.of(src), StandardCharsets.UTF_8);){
+            System.out.println(in.readLine());
+
+        }catch(IOException ex){
+            System.err.println("Caught IO Exception" + ex.getMessage());
+        }
+    }
 }
