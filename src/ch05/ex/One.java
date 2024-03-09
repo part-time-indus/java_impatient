@@ -24,13 +24,15 @@ public class One {
 //            System.out.println("File could not be read for unknown reasons");
 //        }
 
-        System.out.println(factorial(5));
-        Exception ex = new Exception("Random Exception");
-        StackTraceElement[] stackEl = ex.getStackTrace();
-        System.out.println("\nStack trace of the custom exception:");
-        for(StackTraceElement e: stackEl){
-            System.out.println(e.toString());
-        }
+//        System.out.println(factorial(5));
+//        Exception ex = new Exception("Random Exception");
+//        StackTraceElement[] stackEl = ex.getStackTrace();
+//        System.out.println("\nStack trace of the custom exception:");
+//        for(StackTraceElement e: stackEl){
+//            System.out.println(e.toString());
+//        }
+
+        System.out.println(min(new int[]{20, 30, 65, 554, 6, 231, 2}));
     }
 
     public static int sumValue(String fileName, double[] out)throws IOException{
@@ -191,5 +193,19 @@ public class One {
             ex.printStackTrace();
         }
         return result;
+    }
+
+    public static int min(int[] values){
+        int minVal = values[0];
+        for(int val: values){
+            if(minVal > val){
+                minVal = val;
+            }
+        }
+        for (int value : values) {
+            assert (minVal < value);
+        }
+        return minVal;
+
     }
 }
