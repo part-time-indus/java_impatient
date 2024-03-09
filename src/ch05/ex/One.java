@@ -1,10 +1,9 @@
 package ch05.ex;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.util.Scanner;
 
 public class One {
     public static void main(String[] varargs){
@@ -79,4 +78,42 @@ public class One {
         reader.close();
         return 0;
     }
+
+    static public void ScanAndWriteWithException(String src, String dest){
+        Scanner in = null;
+        PrintWriter out = null;
+        try{
+            in = new Scanner(Path.of(src));
+            out = new PrintWriter(dest);
+            try{
+                while(in.hasNext()){
+                    out.println(in.next().toLowerCase());
+                }
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+            }
+
+        } catch(FileNotFoundException ex){
+            System.out.println(ex.getMessage());
+        } catch(IOException ex){
+            System.out.println(ex.toString());
+
+        } finally{
+            if(in != null){
+                try{
+                    in.close();
+                }catch(IllegalStateException ex){
+                    System.out.println(ex.getMessage());
+                }
+            }
+            if(out != null){
+                try{
+                    out.close();
+                }catch(IllegalStateException ex){
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+    }
+
 }
