@@ -10,18 +10,26 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class One {
     public static void main(String[] varargs){
-        try{
-            double[] result = new double[1];
-            var err = sumValue("src/ch05/ex/num.txt", result);
-            if(err == 0){
-                System.out.println(result[0]);
-            }else{
-                System.out.println("An error occured");
-            }
-        }catch(NumberFormatException e){
-            System.out.println("Please recheck the file. All data must be in decimal point number format");
-        }catch(IOException e){
-            System.out.println("File could not be read for unknown reasons");
+//        try{
+//            double[] result = new double[1];
+//            var err = sumValue("src/ch05/ex/num.txt", result);
+//            if(err == 0){
+//                System.out.println(result[0]);
+//            }else{
+//                System.out.println("An error occured");
+//            }
+//        }catch(NumberFormatException e){
+//            System.out.println("Please recheck the file. All data must be in decimal point number format");
+//        }catch(IOException e){
+//            System.out.println("File could not be read for unknown reasons");
+//        }
+
+        System.out.println(factorial(5));
+        Exception ex = new Exception("Random Exception");
+        StackTraceElement[] stackEl = ex.getStackTrace();
+        System.out.println("\nStack trace of the custom exception:");
+        for(StackTraceElement e: stackEl){
+            System.out.println(e.toString());
         }
     }
 
@@ -168,5 +176,20 @@ public class One {
             }
         };
 
+    }
+
+    public static int factorial(int n){
+        var result = 0;
+        try {
+            if (n == 0 || n == 1) {
+                System.out.println("Reached the base of this factorial: ");
+                return 1;
+            }
+            System.out.println("Getting the next number in factorial: " + (n-1));
+            result = n * factorial(n - 1);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return result;
     }
 }
