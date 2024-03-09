@@ -9,8 +9,13 @@ import java.io.FileReader;
 public class One {
     public static void main(String[] varargs){
         try{
-            var result = readValue("src/ch05/ex/num.txt");
-            System.out.println(sumValue(result));
+            double[] result = new double[1];
+            var err = sumValue("src/ch05/ex/num.txt", result);
+            if(err == 0){
+                System.out.println(result[0]);
+            }else{
+                System.out.println("An error occured");
+            }
         }catch(NumberFormatException e){
             System.out.println("Please recheck the file. All data must be in decimal point number format");
         }catch(IOException e){
@@ -18,38 +23,60 @@ public class One {
         }
     }
 
-    public static double sumValue(ArrayList<Double> values){
+    public static int sumValue(String fileName, double[] out)throws IOException{
+
+        ArrayList<Double> values = new ArrayList<>();
+        int err = readValue(fileName,values);
+        if(err != 0){
+            return err;
+        }
         double result = 0.0;
         for(Double value: values){
             result = result + value;
         }
-        return result;
+        out[0] = result;
+        return 0;
     }
-    public static ArrayList<Double> readValue(String filename)throws IOException, NullPointerException, NumberFormatException {
-        File f = new File(filename);
-        ArrayList<Double> result = new ArrayList<Double>();
-
-        try(FileReader reader = new FileReader(f)){
-            var buf = new char[512];
-            int charsRead = reader.read(buf);
-            StringBuilder word = new StringBuilder();
-            while(charsRead != -1){
-                for(int i = 0; i < charsRead ; i++){
-                    if(buf[i] == '\n'){
-                        var dbl = Double.parseDouble(word.toString());
-                        result.add(dbl);
-                        word.delete(0, charsRead);
-                    }
-                    word.append(buf[i]);
-                }
-                result.add(Double.parseDouble(word.toString()));
-                word.delete(0, charsRead);
-                charsRead = reader.read(buf);
-            }
-
-        }catch(FileNotFoundException ex){
-            System.out.println("File could not be found. Please ensure the filename or file path is correct.");;
+    public static int readValue(String filename, ArrayList<Double> out)throws FileNotFoundException, IOException, NullPointerException, NumberFormatException {
+        if(out == null){
+            out = new ArrayList<Double>();
         }
-         return result;
+        if(filename == null){
+            return -1;
+        }
+        File f = new File(filename);
+        if(!f.exists() || f.isDirectory()){
+            return -2;
+        }
+        var reader = new FileReader(f);
+        var buf = new char[512];
+        int charsRead = reader.read(buf);
+        StringBuilder word = new StringBuilder();
+        while(charsRead != -1){
+            for(int i = 0; i < charsRead ; i++){
+                var currChar = buf[i];
+                var notNum = Character.getType(currChar) != Character.DECIMAL_DIGIT_NUMBER;
+                var notDot = currChar != '.';
+                if(notNum &&
+                        notDot &&
+                        currChar != '\r' &&
+                        currChar != '\n'
+                ){
+                    return -3;
+                }
+                if(currChar == '\n'){
+                    var dbl = Double.parseDouble(word.toString());
+                    out.add(dbl);
+                    word.delete(0, charsRead);
+                }
+
+                word.append(buf[i]);
+            }
+            out.add(Double.parseDouble(word.toString()));
+            word.delete(0, charsRead);
+            charsRead = reader.read(buf);
+        }
+        reader.close();
+        return 0;
     }
 }
