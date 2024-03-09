@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import java.util.Scanner;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class One {
     public static void main(String[] varargs){
@@ -156,5 +157,16 @@ public class One {
         }catch(IOException ex){
             System.err.println("Caught IO Exception" + ex.getMessage());
         }
+    }
+
+    public static AutoCloseable ReentrantWithCloseable(ReentrantLock r){
+        r.lock();
+        return new AutoCloseable() {
+            @Override
+            public void close(){
+                r.unlock();
+            }
+        };
+
     }
 }
