@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.FileHandler;
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class One {
     public static void main(String[] varargs){
@@ -208,4 +212,26 @@ public class One {
         return minVal;
 
     }
+
+    public static void FilterRecord(String[] badWords){
+        var logger = Logger.getLogger("Whatever");
+        Filter BadWordsFilter = (LogRecord record) -> {
+            boolean result = false;
+            var recordStr = record.getMessage();
+            if(recordStr != null){
+                var recordStrNormalized = recordStr.toLowerCase();
+                for(var word: badWords){
+                    result = recordStrNormalized.contains(word);
+                }
+            }
+            return result;
+        };
+        logger.setFilter(BadWordsFilter);
+
+
+
+    }
+
 }
+
+
