@@ -213,8 +213,10 @@ public class One {
 
     }
 
-    public static void FilterRecord(String[] badWords){
+    public static void FilterRecord(String[] badWords) throws IOException{
         var logger = Logger.getLogger("Whatever");
+        var fileHandler = new FileHandler();
+        logger.addHandler(fileHandler);
         Filter BadWordsFilter = (LogRecord record) -> {
             boolean result = false;
             var recordStr = record.getMessage();
