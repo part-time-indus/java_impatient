@@ -24,6 +24,7 @@ public class Table<K,V> {
                 e.setValue(value);
             }
         }
+        data.add(new Entry<>(key, value));
     }
 
     public Entry<K,V> remove(K key){
