@@ -1,4 +1,5 @@
 package ch06;
+import java.io.Closeable;
 import java.util.*;
 import ch06.Pair;
 
@@ -59,6 +60,27 @@ public class Arrays {
         T temp = elements.get(i);
         elements.set(i, elements.get(j));
         elements.set(j, temp);
+    }
+
+    public static <T extends Closeable> void closeAll(ArrayList<T> elems) throws Exception{
+        class ClosingException extends Exception{
+            public ClosingException(String msg, Exception e){
+                super(msg, e);
+            }
+        }
+        ClosingException ex = null;
+        for(T el: elems){
+            try {
+                el.close();
+            }catch(Exception e){
+                if(ex == null){
+                    ex = new ClosingException("Couldn't close the resource", e);
+                }
+            }
+        }
+        if(ex != null){
+            throw ex;
+        }
     }
 
 }
