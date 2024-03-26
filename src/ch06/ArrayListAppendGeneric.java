@@ -9,9 +9,9 @@ public class ArrayListAppendGeneric {
         }
     }
 
-    public static <S> void append(ArrayList<? extends S> src, ArrayList<S> dest){
-        for(S e: src){
-            dest.add(e);
-        }
-    }
+//    public static <S> void append(ArrayList<? extends S> src, ArrayList<S> dest){
+//        for(S e: src){
+//            dest.add(e);
+//        }
+//    }
 }

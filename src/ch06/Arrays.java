@@ -46,4 +46,19 @@ public class Arrays {
         result.add(min);
         result.add(max);
     }
+    private static <T> void maxMin(List<T> elements, Comparator<? super T> comp, List<? super T> result){
+        minMax(elements, comp, result);
+        swapHelper(result,0, 1);
+    }
+
+    private static void swap(List<?> elements, int i, int j){
+        swapHelper(elements, i, j);
+    }
+
+    private static <T> void swapHelper(List<T> elements, int i, int j){
+        T temp = elements.get(i);
+        elements.set(i, elements.get(j));
+        elements.set(j, temp);
+    }
+
 }
