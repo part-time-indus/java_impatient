@@ -31,4 +31,19 @@ public class Arrays {
     public static <E extends Comparable<E>> Pair<E> minMax(ArrayList<E> a){
         return new Pair<>(min(a), max(a));
     }
+
+    public static <T> void minMax(List<T> elements, Comparator<? super T> comp, List<? super T> result){
+        T min = elements.getFirst();
+        T max = elements.getFirst();
+        for(int i = 1; i < elements.size(); i++){
+            T currEl = elements.get(i);
+            if(comp.compare(currEl, min) < 0){
+                min = currEl;
+            }else if(comp.compare(currEl, max) > 0){
+                max =currEl;
+            }
+        }
+        result.add(min);
+        result.add(max);
+    }
 }
