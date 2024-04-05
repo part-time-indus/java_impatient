@@ -1,7 +1,12 @@
 package ch06;
 import java.io.Closeable;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+
 import ch06.Pair;
+import java.lang.reflect.*;
 
 public class Arrays {
 
@@ -83,4 +88,53 @@ public class Arrays {
         }
     }
 
+    public static <T, R> ArrayList<R> map(ArrayList<T> list, Function<T,R> func){
+        ArrayList<R> newList = new ArrayList<>();
+        for(T el: list){
+            newList.add(func.apply(el));
+        }
+        return newList;
+    }
+
+    public static <T> T[] repeat(int n, T obj, IntFunction<T[]> constr){
+        T[] result = constr.apply(n);
+        for(int i = 0; i < n; i++){
+            result[i] = obj;
+        }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked cast")
+    public static <T> T[] repeat(int n, T obj){
+        ArrayList<T> list = new ArrayList<>();
+        Object arr;
+        for(int i = 0; i < n; i++){
+            list.add(obj);
+        }
+        return (T[])list.toArray();
+    }
+
+    @SuppressWarnings("unchecked cast")
+    @SafeVarargs
+    public static <T> T[] repeat(int n, T... objs){
+        T[] result =(T[]) Array.newInstance(objs.getClass().getComponentType(), n * objs.length);
+        for(int i = 0; i < n; i++){
+            System.arraycopy(objs, 0, result, 0, objs.length*n);
+        }
+        return result;
+    }
+
+    @SafeVarargs
+    public static <T> T[] construct(int n, T... values){
+        ArrayList<T> list = new ArrayList<>(java.util.Arrays.asList(values));
+        return list.toArray(values);
+    }
+
+    public static<V, T extends Throwable> V doWork(Callable<V> c, T ex) throws T{
+
+    }
+    public static void main(){
+        var result = repeat(10, 42, Integer[]::new);
+//        System.out.println(repeat(10, 42, int[]::new));
+    }
 }
